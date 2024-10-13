@@ -11,6 +11,8 @@ import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { TaskType } from '@google/generative-ai';
 import { createRetrievalChain } from 'langchain/chains/retrieval';
+import { RunnablePassthrough, RunnableSequence } from '@langchain/core/runnables';
+import { StringOutputParser } from '@langchain/core/output_parsers';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -27,7 +29,11 @@ const genAIModel = new GoogleGenerativeAIEmbeddings({
 const CHUNK_SIZE = 10000;
 const CHUNK_OVERLAP = 1000;
 
-const userQuery = async (pdfFiles, inputQuery) => {
+const formatDocumentsAsString = (documents) => {
+  return documents.map((document) => document.pageContent).join('\n\n');
+};
+
+const userQuery = async (pdfFiles, question) => {
   //TODO: [CREATE SPLITTER]
   const splitter = new RecursiveCharacterTextSplitter({
     separator: [
@@ -71,34 +77,40 @@ const userQuery = async (pdfFiles, inputQuery) => {
   }
 
   //TODO: saving to vector store
-  const vectordb = new MemoryVectorStore(genAIModel);
+  const vectordb = await MemoryVectorStore.fromDocuments(docs_to_store, genAIModel);
 
-  await vectordb.addDocuments(docs_to_store);
+  const retriever = vectordb.asRetriever();
+  console.log('🚀 ~ userQuery ~ retriever:', retriever);
+
+  const SYSTEM_TEMPLATE = `Use the following pieces of context to answer the question at the end.
+If you don't know the answer, just say that you don't know, don't try to make up an answer.
+----------------
+{context}`;
+
+  const prompt = ChatPromptTemplate.fromMessages([
+    ['system', SYSTEM_TEMPLATE],
+    ['human', '{question}'],
+  ]);
 
   const model = new ChatGoogleGenerativeAI({
     apiKey: process.env.GEMINI_API_KEY,
     model: 'gemini-1.5-flash',
   });
+  const chain = RunnableSequence.from([
+    {
+      context: retriever.pipe(formatDocumentsAsString),
+      question: new RunnablePassthrough(),
+    },
+    prompt,
+    model,
+    new StringOutputParser(),
+  ]);
 
-  const template = `You are a helpful AI assistant. Answer based on the context provided. input: {inputQuery} context: {context} answer:`;
-
-  const prompt = ChatPromptTemplate.fromTemplate(template);
-
-  const chain = prompt.pipe(model);
-
-  const retriever = vectordb.asRetriever();
-
-  const retrievalChain = await createRetrievalChain({ retriever, combineDocsChain: chain });
-  console.log('🚀 ~ userQuery ~ retrievalChain:', retrievalChain);
-
-  const response = await retrievalChain.invoke({
-    inputQuery: `Individual users should not change the location or installation of computer`,
-    context: 'user',
-  });
-  console.log('AI Response:', response);
+  const answer = await chain.invoke(question);
+  console.log({ answer });
 };
 
 userQuery(
   ['D:\\HocKi8\\big_data\\docs\\lt\\my_bigdata\\md\\SmartDocBot\\pdf\\HandBook.pdf'],
-  'Individual users should not change the location or installation of computer',
+  'What number rule have content: Individual users should not change the location or installation of computer',
 );
