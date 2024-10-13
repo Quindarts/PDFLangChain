@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Classification</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      img {
+        display: block;
+        margin: 0 auto;
+        width: 200px;
+      }
+
+      .form-result-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+
+      .form-container,
+      .result-container {
+        flex: 1;
+        padding: 10px;
+      }
+
+      .form-container {
+        border-right: 2px solid #ccc;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      .result {
+        font-size: 16px;
+        color: #333;
+        white-space: pre-wrap;
+        background-color: #f9f9f9;
+        padding: 10px;
+        border-radius: 8px;
+        min-height: 200px;
+        border: 1px solid #ccc;
+      }
+
+      .loading {
+        text-align: center;
+        font-size: 18px;
+        color: #007bff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img
+        width="200px"
+        src="https://raw.githubusercontent.com/Quindarts/education-manager-graduation-student-iuh/refs/heads/main/public/images/logo-light.webp"
+        alt="IUH AI Logo"
+      />
+      <h1>IUH AI</h1>
+
+      <div class="form-result-container">
+        <!-- Form Section -->
+        <div class="form-container">
+          <h3>Default category</h3>
+          <p>['WEB', 'APP', 'SYSTEM', 'AI', 'DATA', 'SECURITY', 'NETWORK', 'OTHER']</p>
+          <form id="classificationForm">
+            <button type="submit">Classify topics</button>
+          </form>
+        </div>
+
+        <!-- Result Section -->
+        <div class="result-container">
+          <h3>Result of classify topics</h3>
+          <div id="result" class="result">No results yet.</div>
+        </div>
+      </div>
+
+      <!-- Loading Indicator -->
+      <div id="loading" class="loading" style="display: none">Loading...</div>
+    </div>
+
+    <script>
+      document.getElementById('classificationForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Hiển thị phần loading và ẩn kết quả hiện tại
+        const loadingElement = document.getElementById('loading');
+        const resultElement = document.getElementById('result');
+        loadingElement.style.display = 'block';
+        resultElement.innerText = '';
+
+        try {
+          const response = await fetch('http://localhost:5001/api/v1/category-topics');
+          const result = await response.json();
+          resultElement.innerText = JSON.stringify(result, null, 2);
+        } catch (error) {
+          console.error('Error:', error);
+          resultElement.innerText = 'Error occurred while classifying the project.';
+        } finally {
+          // Ẩn loading khi đã hoàn thành request
+          loadingElement.style.display = 'none';
+        }
+      });
+    </script>
+  </body>
+</html>

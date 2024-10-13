@@ -1,0 +1,114 @@
+{
+  "values": {
+    "array_topics_category": [
+      {
+        "name_category": "WEB",
+        "topics": [
+          "Xây dựng website bán quần áo thời trang.",
+          "Xây dựng website quản lý bán hàng máy tính."
+        ],
+        "total_topics": 2
+      },
+      {
+        "name_category": "APP",
+        "topics": [
+          "Viết chương trình ứng dụng Hệ thống thi trắc nghiệm trực tuyến.",
+          "Viết chương trình ứng dụng Hệ thống quản lý đào tạo sinh viên theo hệ thống tín chỉ của trường đại học.",
+          "Viết chương trình ứng dụng Hệ thống quản lý phòng khám đa khoa.",
+          "Viết chương trình ứng dụng Hệ thống quản lý thẩm mỹ viện",
+          "Viết chương trình ứng dụng Đặt tour du lịch online",
+          "Viết chương trình ứng dụng Hệ thống quản lý cho trung tâm ngoại ngữ."
+        ],
+        "total_topics": 6
+      },
+      {
+        "name_category": "SYSTEM",
+        "topics": [
+          "Hệ thống quản lý căng tin không dùng tiền mặt áp dụng tại Trường Đại học Công nghiệp Tp. HCM",
+          "Hệ thống hỗ trợ quản lý câu lạc bộ Tài năng lập trình IUH Talent Software Engineers Club (IUH TSE Club)",
+          "Xây dựng hệ thống tưới tiêu thông minh dựa vào nhiệt độ không khí",
+          "Hệ thống quản lý học phần thực tập doanh nghiệp áp dụng tại Khoa Công nghệ Thông tin",
+          "Hệ thống quản lý ký túc xá của Trường Đại học Công nghiệp Tp. HCM",
+          "Xây dựng hệ thống quản lý học phần khóa luận tốt nghiệp của trường Đại học Công nghiệp Thành phố Hồ Chí Minh",
+          "Hệ thống quản lý thẩm mỹ viện KimBeautySpa",
+          "Xây dựng phần mềm quản lý quán Karaoke",
+          "Xây dựng phần mềm quản lý nhà thuốc",
+          "Phần mềm Quản lý du lịch",
+          "Phần mềm Quản lý trung tâm tin học."
+        ],
+        "total_topics": 11
+      },
+      {
+        "name_category": "AI",
+        "topics": [],
+        "total_topics": 0
+      },
+      {
+        "name_category": "DATA",
+        "topics": [],
+        "total_topics": 0
+      },
+      {
+        "name_category": "SECURITY",
+        "topics": [],
+        "total_topics": 0
+      },
+      {
+        "name_category": "NETWORK",
+        "topics": [],
+        "total_topics": 0
+      },
+      {
+        "name_category": "OTHER",
+        "topics": [
+          "Ứng dụng công nghệ blockchain trong phát triển hệ thống cho thuê nhà và hợp đồng thông minh",
+          "Ví tín dụng",
+          "Sàn thương mại điện tử Sharebuy"
+        ],
+        "total_topics": 3
+      }
+    ],
+    "array_lecturers_category": [
+      {
+        "lecturerName": "Nguyễn Thị Hạnh",
+        "name_category": "WEB"
+      },
+      {
+        "lecturerName": "Nguyễn Thị Hạnh",
+        "name_category": "APP"
+      },
+      {
+        "lecturerName": "Nguyễn Thị Hạnh",
+        "name_category": "SYSTEM"
+      },
+      {
+        "lecturerName": "Nguyễn Thị Hoàng Khánh",
+        "name_category": "WEB"
+      },
+      {
+        "lecturerName": "Nguyễn Thị Hoàng Khánh",
+        "name_category": "APP"
+      },
+      {
+        "lecturerName": "Nguyễn Thị Hoàng Khánh",
+        "name_category": "SYSTEM"
+      },
+      {
+        "lecturerName": "Nguyễn Thị Hoàng Khánh",
+        "name_category": "OTHER"
+      },
+      {
+        "lecturerName": "Phạm Thanh Hùng",
+        "name_category": "WEB"
+      },
+      {
+        "lecturerName": "Phạm Thanh Hùng",
+        "name_category": "APP"
+      },
+      {
+        "lecturerName": "Phạm Thanh Hùng",
+        "name_category": "SYSTEM"
+      }
+    ]
+  }
+}

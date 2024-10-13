@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 //[model]
 import { ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings } from '@langchain/google-genai';
 //[template]
-import { ChatPromptTemplate, PromptTemplate } from '@langchain/core/prompts';
+import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf';
 import { MemoryVectorStore } from 'langchain/vectorstores/memory';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
@@ -10,7 +10,6 @@ import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { TaskType } from '@google/generative-ai';
-import { createRetrievalChain } from 'langchain/chains/retrieval';
 import { RunnablePassthrough, RunnableSequence } from '@langchain/core/runnables';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 
@@ -80,7 +79,6 @@ const userQuery = async (pdfFiles, question) => {
   const vectordb = await MemoryVectorStore.fromDocuments(docs_to_store, genAIModel);
 
   const retriever = vectordb.asRetriever();
-  console.log('🚀 ~ userQuery ~ retriever:', retriever);
 
   const SYSTEM_TEMPLATE = `Use the following pieces of context to answer the question at the end.
 If you don't know the answer, just say that you don't know, don't try to make up an answer.
